@@ -19,7 +19,6 @@ package org.apache.tika.filetypedetector;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.spi.FileTypeDetector;
@@ -46,12 +45,10 @@ public class TikaFileTypeDetectorTest {
     @Before
     public void setUp() throws Exception {
         testDirectory = tempDir.newFolder().toPath();
-        try (InputStream is = this.getClass().getResourceAsStream(TEST_CLASSPATH)) {
-            Files.copy(is, testDirectory.resolve(TEST_HTML));
-        }
-        try (InputStream is = this.getClass().getResourceAsStream(TEST_CLASSPATH)) {
-            Files.copy(is, testDirectory.resolve(TEST_UNRECOGNISED_EXTENSION));
-        }
+        Files.copy(this.getClass().getResourceAsStream(TEST_CLASSPATH), 
+                testDirectory.resolve(TEST_HTML));
+        Files.copy(this.getClass().getResourceAsStream(TEST_CLASSPATH), 
+                testDirectory.resolve(TEST_UNRECOGNISED_EXTENSION));
     }
     
     @After

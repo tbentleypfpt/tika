@@ -31,8 +31,9 @@ public class DL4JVGG16NetTest {
     @Test
     public void recognise() throws Exception {
         TikaConfig config = null;
-        try (InputStream is = getClass().getResourceAsStream("dl4j-vgg16-config.xml")) {
-            config = new TikaConfig(is);
+        InputStream is = getClass().getResourceAsStream("dl4j-vgg16-config.xml");
+        try {
+            config = new TikaConfig(getClass().getResourceAsStream("dl4j-vgg16-config.xml"));
         } catch (Exception e) {
             if (e.getMessage() != null
                     && (e.getMessage().contains("Connection refused")
@@ -45,15 +46,12 @@ public class DL4JVGG16NetTest {
         assumeTrue("something went wrong loading tika config", config != null);
         Tika tika = new Tika(config);
         Metadata md = new Metadata();
-        try (InputStream is = getClass().getResourceAsStream("lion.jpg")) {
-            tika.parse(is, md);
-        }
+        tika.parse(getClass().getResourceAsStream("lion.jpg"), md);
         String[] objects = md.getValues("OBJECT");
         boolean found = false;
         for (String object : objects) {
             if (object.contains("lion")) {
                 found = true;
-                break;
             }
         }
         assertTrue(found);

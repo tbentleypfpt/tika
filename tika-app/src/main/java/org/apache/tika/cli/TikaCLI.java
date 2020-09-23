@@ -129,9 +129,7 @@ public class TikaCLI {
         TikaCLI cli = new TikaCLI();
 
         if (!isConfigured()) {
-            try (InputStream is = cli.getClass().getResourceAsStream("/log4j.properties")) {
-                PropertyConfigurator.configure(is);
-            }
+            PropertyConfigurator.configure(cli.getClass().getResourceAsStream("/log4j.properties"));
         }
 
         if (cli.testForHelp(args)) {
@@ -393,7 +391,7 @@ public class TikaCLI {
             displaySupportedTypes();
         } else if (arg.startsWith("--compare-file-magic=")) {
             pipeMode = false;
-            compareFileMagic(arg.substring("--compare-file-magic=".length()));
+            compareFileMagic(arg.substring(arg.indexOf('=')+1));
         } else if (arg.equals("--dump-minimal-config")) {
             pipeMode = false;
             dumpConfig(TikaConfigSerializer.Mode.MINIMAL);
@@ -466,7 +464,7 @@ public class TikaCLI {
         } else if (arg.startsWith("-c")) {
             networkURI = new URI(arg.substring("-c".length()));
         } else if (arg.startsWith("--client=")) {
-            networkURI = new URI(arg.substring("--client=".length()));
+            networkURI = new URI(arg.substring("-c".length()));
         } else {
             pipeMode = false;
             configure();

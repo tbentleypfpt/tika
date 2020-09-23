@@ -44,7 +44,7 @@
         <dependency>
             <groupId>com.github.luben</groupId>
             <artifactId>zstd-jni</artifactId>
-            <version>${zstd.version}</version>
+            <version>1.4.5-4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>com.github.junrar</groupId>
             <artifactId>junrar</artifactId>
-            <version>${junrar.version}</version>
+            <version>4.0.0</version>
             <exclusions>
                 <!-- TIKA-2504 exclude to avoid vulnerability in plexus-utils -->
                 <exclusion>

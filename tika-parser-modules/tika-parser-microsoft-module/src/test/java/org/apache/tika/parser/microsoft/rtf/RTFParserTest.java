@@ -334,16 +334,15 @@ public class RTFParserTest extends TikaTest {
 
     @Test
     public void testTurningOffList() throws Exception {
-        try (InputStream is = getClass().getResourceAsStream(
-                "/org/apache/tika/parser/microsoft/rtf/ignoreListMarkup-tika-config.xml")) {
-            assertNotNull(is);
-            TikaConfig tikaConfig = new TikaConfig(is);
-            Parser p = new AutoDetectParser(tikaConfig);
-            String content = getXML("testRTFListMicrosoftWord.rtf", p).xml;
-            assertNotContained("<ol>", content);
-            assertNotContained("<ul>", content);
-            assertNotContained("<li>", content);
-        }
+        InputStream is = getClass().getResourceAsStream(
+                "/org/apache/tika/parser/microsoft/rtf/ignoreListMarkup-tika-config.xml");
+        assertNotNull(is);
+        TikaConfig tikaConfig = new TikaConfig(is);
+        Parser p = new AutoDetectParser(tikaConfig);
+        String content = getXML("testRTFListMicrosoftWord.rtf", p).xml;
+        assertNotContained("<ol>", content);
+        assertNotContained("<ul>", content);
+        assertNotContained("<li>", content);
     }
 
     @Test
@@ -446,16 +445,13 @@ public class RTFParserTest extends TikaTest {
         //test that memory allocation of the bin element is limited
         //via the config file.  Unfortunately, this test file's bin embedding contains 10 bytes
         //so we had to set the config to 0.
-        try (InputStream is =
-                     getClass().getResourceAsStream("/org/apache/tika/parser/microsoft/rtf/tika-config.xml")) {
-            assertNotNull(is);
-            TikaConfig tikaConfig = new TikaConfig(is);
-            Parser p = new AutoDetectParser(tikaConfig);
-            List<Metadata> metadataList = getRecursiveMetadata("testBinControlWord.rtf", p);
-            assertEquals(1, metadataList.size());
-            assertContains("TikaMemoryLimitException",
-                    metadataList.get(0).get(TikaCoreProperties.TIKA_META_EXCEPTION_EMBEDDED_STREAM));
-        }
+        InputStream is = getClass().getResourceAsStream("/org/apache/tika/parser/microsoft/rtf/tika-config.xml");
+        assertNotNull(is);
+        TikaConfig tikaConfig = new TikaConfig(is);
+        Parser p = new AutoDetectParser(tikaConfig);
+        List<Metadata> metadataList = getRecursiveMetadata("testBinControlWord.rtf", p);
+        assertEquals(1, metadataList.size());
+        assertContains("TikaMemoryLimitException", metadataList.get(0).get(TikaCoreProperties.TIKA_META_EXCEPTION_EMBEDDED_STREAM));
     }
 
     @Test

@@ -350,11 +350,10 @@ public class TesseractOCRParser extends AbstractParser implements Initializable 
     private void processImage(File scratchFile, TesseractOCRConfig config) throws IOException, TikaException {
     	
     	// fetch rotation script from resources
+    	InputStream in = getClass().getResourceAsStream("rotation.py");
     	TemporaryResources tmp = new TemporaryResources();
     	File rotationScript = tmp.createTemporaryFile();
-    	try (InputStream in = getClass().getResourceAsStream("rotation.py")) {
-            Files.copy(in, rotationScript.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        }
+    	Files.copy(in, rotationScript.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
     	CommandLine commandLine = new CommandLine("python");
     	String[] args = {"-W",

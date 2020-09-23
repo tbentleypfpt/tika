@@ -514,11 +514,10 @@ public class ExcelParserTest extends TikaTest {
         assertContainsAtLeast(minExpected, getRecursiveMetadata("testEXCEL_macro.xls", context));
 
         //test configuring via config file
-        try (InputStream is = this.getClass().getResourceAsStream("tika-config-macros.xml")) {
-            TikaConfig tikaConfig = new TikaConfig(is);
-            AutoDetectParser parser = new AutoDetectParser(tikaConfig);
-            assertContainsAtLeast(minExpected, getRecursiveMetadata("testEXCEL_macro.xls", parser));
-        }
+        TikaConfig tikaConfig = new TikaConfig(this.getClass().getResourceAsStream("tika-config-macros.xml"));
+        AutoDetectParser parser = new AutoDetectParser(tikaConfig);
+        assertContainsAtLeast(minExpected, getRecursiveMetadata("testEXCEL_macro.xls", parser));
+
     }
 
     @Test
@@ -576,12 +575,11 @@ public class ExcelParserTest extends TikaTest {
 
     @Test
     public void testDateFormat() throws Exception {
-        try (InputStream is = this.getClass().getResourceAsStream("tika-config-custom-date-override.xml")) {
-            TikaConfig tikaConfig = new TikaConfig(is);
-            Parser p = new AutoDetectParser(tikaConfig);
-            String xml = getXML("testEXCEL_dateFormats.xls", p).xml;
-            assertContains("2018-09-20", xml);
-            assertContains("1996-08-10", xml);
-        }
+        TikaConfig tikaConfig = new TikaConfig(
+                this.getClass().getResourceAsStream("tika-config-custom-date-override.xml"));
+        Parser p = new AutoDetectParser(tikaConfig);
+        String xml = getXML("testEXCEL_dateFormats.xls", p).xml;
+        assertContains("2018-09-20", xml);
+        assertContains("1996-08-10", xml);
     }
 }

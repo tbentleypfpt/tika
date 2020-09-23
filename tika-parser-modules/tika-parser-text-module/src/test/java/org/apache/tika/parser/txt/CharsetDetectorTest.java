@@ -66,9 +66,7 @@ public class CharsetDetectorTest extends TikaTest {
     public void testWin125XHeuristics() throws Exception {
         //TIKA-2219
         CharsetDetector detector = new CharsetDetector();
-        try (InputStream is = getResourceAsStream("/test-documents/testTXT_win-1252.txt")) {
-            detector.setText(is);
-        }
+        detector.setText(getResourceAsStream("/test-documents/testTXT_win-1252.txt"));
         CharsetMatch charset =  detector.detect();
         assertEquals("windows-1252", charset.getName());
     }

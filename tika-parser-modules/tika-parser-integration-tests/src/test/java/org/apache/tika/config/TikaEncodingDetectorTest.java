@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -129,15 +128,13 @@ public class TikaEncodingDetectorTest extends AbstractTikaConfigTest {
 
     @Test
     public void testNonDetectingDetectorParams() throws Exception {
-        TikaConfig tikaConfig = null;
-        try (InputStream is = getResourceAsStream("/org/apache/tika/config/TIKA-2273-non-detecting-params.xml")) {
-            tikaConfig = new TikaConfig(is);
-        }
+        TikaConfig tikaConfig = new TikaConfig(
+                getResourceAsStream("/org/apache/tika/config/TIKA-2273-non-detecting-params.xml"));
         AutoDetectParser p = new AutoDetectParser(tikaConfig);
         List<Parser> parsers = new ArrayList<>();
         findEncodingDetectionParsers(p, parsers);
 
-        assertEquals(4, parsers.size());
+        assertEquals(3, parsers.size());
         EncodingDetector encodingDetector = ((AbstractEncodingDetectorParser)parsers.get(0)).getEncodingDetector();
         assertTrue(encodingDetector instanceof CompositeEncodingDetector);
         assertEquals(1, ((CompositeEncodingDetector) encodingDetector).getDetectors().size());
@@ -150,9 +147,9 @@ public class TikaEncodingDetectorTest extends AbstractTikaConfigTest {
 
     @Test
     public void testNonDetectingDetectorParamsBadCharset() throws Exception {
-        try (InputStream is =
-                     getResourceAsStream("/org/apache/tika/config/TIKA-2273-non-detecting-params-bad-charset.xml")){
-            TikaConfig tikaConfig = new TikaConfig(is);
+        try {
+            TikaConfig tikaConfig = new TikaConfig(
+                    getResourceAsStream("/org/apache/tika/config/TIKA-2273-non-detecting-params-bad-charset.xml"));
             fail("should have thrown TikaConfigException");
         } catch (TikaConfigException e) {
 
@@ -169,7 +166,7 @@ public class TikaEncodingDetectorTest extends AbstractTikaConfigTest {
         List<Parser> parsers = new ArrayList<>();
         findEncodingDetectionParsers(p, parsers);
 
-        assertEquals(5, parsers.size());
+        assertEquals(4, parsers.size());
 
         for (Parser encodingDetectingParser : parsers) {
             EncodingDetector encodingDetector = ((AbstractEncodingDetectorParser) encodingDetectingParser).getEncodingDetector();
@@ -198,7 +195,7 @@ public class TikaEncodingDetectorTest extends AbstractTikaConfigTest {
         List<Parser> parsers = new ArrayList<>();
         findEncodingDetectionParsers(p, parsers);
 
-        assertEquals(4, parsers.size());
+        assertEquals(3, parsers.size());
         for (Parser childParser : parsers) {
             EncodingDetector encodingDetector = ((AbstractEncodingDetectorParser)childParser).getEncodingDetector();
             assertTrue(encodingDetector instanceof CompositeEncodingDetector);

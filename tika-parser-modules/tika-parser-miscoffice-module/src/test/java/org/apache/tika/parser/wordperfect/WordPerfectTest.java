@@ -70,14 +70,13 @@ public class WordPerfectTest extends TikaTest {
         assertContains("this was deleted.", xml);
 
 
-        try (InputStream is = getClass().getResourceAsStream("/org/apache/tika/parser/wordperfect/tika-config.xml")) {
-            assertNotNull(is);
-            TikaConfig tikaConfig = new TikaConfig(is);
+        InputStream is = getClass().getResourceAsStream("/org/apache/tika/parser/wordperfect/tika-config.xml");
+        assertNotNull(is);
+        TikaConfig tikaConfig = new TikaConfig(is);
 
-            Parser p = tikaConfig.getParser();
+        Parser p = tikaConfig.getParser();
 
-            xml = getXML("testWordPerfect.wpd", p).xml;
-            assertNotContained("this was deleted", xml);
-        }
+        xml = getXML("testWordPerfect.wpd", p).xml;
+        assertNotContained("this was deleted", xml);
     }
 }

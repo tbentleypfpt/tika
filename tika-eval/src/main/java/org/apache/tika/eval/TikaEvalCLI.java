@@ -16,7 +16,6 @@
  */
 package org.apache.tika.eval;
 
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -140,9 +139,9 @@ public class TikaEvalCLI {
         try {
             tmpBCConfig = Files.createTempFile("tika-eval-profiler", ".xml");
             if (! containsBC) {
-                try (InputStream is = this.getClass().getResourceAsStream("/tika-eval-profiler-config.xml")) {
-                    Files.copy(is, tmpBCConfig, StandardCopyOption.REPLACE_EXISTING);
-                }
+                Files.copy(
+                        this.getClass().getResourceAsStream("/tika-eval-profiler-config.xml"),
+                        tmpBCConfig, StandardCopyOption.REPLACE_EXISTING);
                 argList.add("-bc");
                 argList.add(tmpBCConfig.toAbsolutePath().toString());
             }
@@ -231,9 +230,9 @@ public class TikaEvalCLI {
         try {
             tmpBCConfig = Files.createTempFile("tika-eval", ".xml");
             if (! containsBC) {
-                try (InputStream is = this.getClass().getResourceAsStream("/tika-eval-comparison-config.xml")) {
-                    Files.copy(is, tmpBCConfig, StandardCopyOption.REPLACE_EXISTING);
-                }
+                Files.copy(
+                        this.getClass().getResourceAsStream("/tika-eval-comparison-config.xml"),
+                        tmpBCConfig, StandardCopyOption.REPLACE_EXISTING);
                 argList.add("-bc");
                 argList.add(tmpBCConfig.toAbsolutePath().toString());
 

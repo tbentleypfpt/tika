@@ -36,9 +36,9 @@ public class ImageParserTest extends TikaTest {
     public void testBMP() throws Exception {
         Metadata metadata = new Metadata();
         metadata.set(Metadata.CONTENT_TYPE, "image/bmp");
-        try (InputStream stream = getClass().getResourceAsStream("/test-documents/testBMP.bmp")) {
-            parser.parse(stream, new DefaultHandler(), metadata, new ParseContext());
-        }
+        InputStream stream =
+                getClass().getResourceAsStream("/test-documents/testBMP.bmp");
+        parser.parse(stream, new DefaultHandler(), metadata, new ParseContext());
 
         assertEquals("75", metadata.get("height"));
         assertEquals("100", metadata.get("width"));
@@ -59,9 +59,9 @@ public class ImageParserTest extends TikaTest {
     public void testGIF() throws Exception {
         Metadata metadata = new Metadata();
         metadata.set(Metadata.CONTENT_TYPE, "image/gif");
-        try (InputStream stream = getClass().getResourceAsStream("/test-documents/testGIF.gif")) {
-            parser.parse(stream, new DefaultHandler(), metadata, new ParseContext());
-        }
+        InputStream stream =
+                getClass().getResourceAsStream("/test-documents/testGIF.gif");
+        parser.parse(stream, new DefaultHandler(), metadata, new ParseContext());
 
         assertEquals("75", metadata.get("height"));
         assertEquals("100", metadata.get("width"));
@@ -90,9 +90,9 @@ public class ImageParserTest extends TikaTest {
     public void testJPEG() throws Exception {
         Metadata metadata = new Metadata();
         metadata.set(Metadata.CONTENT_TYPE, "image/jpeg");
-        try (InputStream stream = getClass().getResourceAsStream("/test-documents/testJPEG.jpg")) {
-            parser.parse(stream, new DefaultHandler(), metadata, new ParseContext());
-        }
+        InputStream stream =
+                getClass().getResourceAsStream("/test-documents/testJPEG.jpg");
+        parser.parse(stream, new DefaultHandler(), metadata, new ParseContext());
 
         assertEquals("75", metadata.get("height"));
         assertEquals("100", metadata.get("width"));
@@ -126,9 +126,9 @@ public class ImageParserTest extends TikaTest {
     public void testPNG() throws Exception {
         Metadata metadata = new Metadata();
         metadata.set(Metadata.CONTENT_TYPE, "image/png");
-        try (InputStream stream = getClass().getResourceAsStream("/test-documents/testPNG.png")) {
-            parser.parse(stream, new DefaultHandler(), metadata, new ParseContext());
-        }
+        InputStream stream =
+                getClass().getResourceAsStream("/test-documents/testPNG.png");
+        parser.parse(stream, new DefaultHandler(), metadata, new ParseContext());
 
         assertEquals("75", metadata.get("height"));
         assertEquals("100", metadata.get("width"));
@@ -164,9 +164,10 @@ public class ImageParserTest extends TikaTest {
     public void testJBIG2() throws Exception {
         Metadata metadata = new Metadata();
         metadata.set(Metadata.CONTENT_TYPE, "image/x-jbig2");
-        try (InputStream stream = getClass().getResourceAsStream("/test-documents/testJBIG2.jb2")) {
-            parser.parse(stream, new DefaultHandler(), metadata, new ParseContext());
-        }
+        InputStream stream =
+                getClass().getResourceAsStream("/test-documents/testJBIG2.jb2");
+        parser.parse(
+                stream, new DefaultHandler(), metadata, new ParseContext());
         assertEquals("78", metadata.get("height"));
         assertEquals("328", metadata.get("width"));
         assertEquals("image/x-jbig2", metadata.get("Content-Type"));

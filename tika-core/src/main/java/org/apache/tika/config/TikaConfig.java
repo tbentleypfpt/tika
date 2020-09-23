@@ -249,11 +249,11 @@ public class TikaConfig {
     public TikaConfig() throws TikaException, IOException {
 
         String config = System.getProperty("tika.config");
-        if (config == null || config.trim().equals("")) {
+        if (config == null) {
             config = System.getenv("TIKA_CONFIG");
         }
 
-        if (config == null || config.trim().equals("")) {
+        if (config == null) {
             this.serviceLoader = new ServiceLoader();
             this.mimeTypes = getDefaultMimeTypes(getContextClassLoader());
             this.encodingDetector = getDefaultEncodingDetector(serviceLoader);

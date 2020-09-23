@@ -16,7 +16,6 @@
  */
 package org.apache.tika.mime;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,9 +72,8 @@ public class CustomReaderTest {
   public void testCustomReader() throws Exception {
     MimeTypes mimeTypes = new MimeTypes();
     CustomMimeTypesReader reader = new CustomMimeTypesReader(mimeTypes);
-    try (InputStream is = getClass().getResourceAsStream("custom-mimetypes.xml")) {
-      reader.read(is);
-    }
+    reader.read(getClass().getResourceAsStream("custom-mimetypes.xml"));
+    
     String key = "hello/world-file";
 
     MimeType hello = mimeTypes.forName(key);
@@ -84,14 +82,14 @@ public class CustomReaderTest {
     assertEquals(0, reader.ignorePatterns.size());
     
     // Now add another resource with conflicting regex
-    try (InputStream is = getClass().getResourceAsStream("custom-mimetypes2.xml")) {
-      reader.read(is);
-    }
+    reader.read(getClass().getResourceAsStream("custom-mimetypes2.xml"));
+    
     key = "another/world-file";
     MimeType another = mimeTypes.forName(key);
     assertEquals("kittens", reader.values.get(key));
     assertEquals(1, reader.ignorePatterns.size());
-    assertEquals(another.toString()+">>*"+hello.getExtension(), reader.ignorePatterns.get(0));
+    assertEquals(another.toString()+">>*"+hello.getExtension(), 
+        reader.ignorePatterns.get(0));
     assertTrue("Server-side script type not detected", another.isInterpreted());
     
     //System.out.println( mimeTypes.getMediaTypeRegistry().getTypes() );
